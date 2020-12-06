@@ -36,7 +36,6 @@ class Edit(FlaskForm):
         
         except ValueError:
             raise ValidationError('Enter a valid rating number')
-            print("Rating can only be a valid number")
 
 class Add(FlaskForm):
     title = StringField('Movie Title', validators=[DataRequired()])
