@@ -3,7 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError
 from mdb import SearchMovie, MovieDetails
 
 app = Flask(__name__) 
@@ -29,6 +29,14 @@ class Edit(FlaskForm):
     review = StringField('Your Review', validators=[DataRequired()])
     # rank = StringField('Your Rank', validators= [DataRequired()])
     submit = SubmitField('Done')
+
+    def validate_rating(self, rating):
+        try:
+            float(rating.data)
+        
+        except ValueError:
+            raise ValidationError('Enter a valid rating number')
+            print("Rating can only be a valid number")
 
 class Add(FlaskForm):
     title = StringField('Movie Title', validators=[DataRequired()])
@@ -98,5 +106,5 @@ def data():
 
     return redirect(url_for('edit', movieID = newMovie.id))
 
-#if __name__ == '__main__':
-#    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
