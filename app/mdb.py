@@ -2,6 +2,7 @@ import requests
 import os
 
 api_key = os.environ['API_KEY']
+key_sec = os.environ['KEY_ONE']
 
 class SearchMovie():
     def __init__(self, query):
