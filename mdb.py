@@ -1,5 +1,7 @@
 import requests
-from secrets import api_key
+import os
+
+api_key = os.environ['API_KEY']
 
 class SearchMovie():
     def __init__(self, query):

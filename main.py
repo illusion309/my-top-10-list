@@ -5,11 +5,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
 from mdb import SearchMovie, MovieDetails
-from secrets import secret_key
+import os
 
 app = Flask(__name__) 
 db_uri = 'sqlite:///movies.db'
-app.config['SECRET_KEY'] = secret_key
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 Bootstrap(app)
 db = SQLAlchemy(app)
