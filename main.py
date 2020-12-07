@@ -94,16 +94,18 @@ def select():
 @app.route('/data')
 def data():
     id = request.args.get('id')
-    result = MovieDetails(int(id))
-    movie = result.result
+    if id == None:
+       return redirect(url_for('home')) 
+    else:     
+        movie = MovieDetails(int(id)).result
 
-    newMovie = Movie(title = movie['title'], year = movie['year'], description = movie['sum'],
-                    rating = 0, ranking = 0, review = 'none', img_url = movie['img_url'])
+        newMovie = Movie(title = movie['title'], year = movie['year'], description = movie['sum'],
+                        rating = 0, ranking = 0, review = 'none', img_url = movie['img_url'])
 
-    db.session.add(newMovie)
-    db.session.commit()
+        db.session.add(newMovie)
+        db.session.commit()
 
-    return redirect(url_for('edit', movieID = newMovie.id))
+        return redirect(url_for('edit', movieID = newMovie.id))
 
 if __name__ == '__main__':
     app.run(debug=True)
