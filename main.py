@@ -5,10 +5,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
 from mdb import SearchMovie, MovieDetails
+from secrets import secret_key
 
 app = Flask(__name__) 
 db_uri = 'sqlite:///movies.db'
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = secret_key
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 Bootstrap(app)
 db = SQLAlchemy(app)
@@ -64,16 +65,19 @@ def add():
 @app.route("/edit", methods=['GET', 'POST'])
 def edit():
     id = request.args.get('movieID')
-    movie = Movie.query.get(id)
-    form = Edit()
+    if id == None:
+       return redirect(url_for('home')) 
+    else: 
+        movie = Movie.query.get(id)
+        form = Edit()
 
-    if form.validate_on_submit():
-        movie.rating = form.rating.data
-        movie.review = form.review.data
-        # movie.ranking = form.rank.data
-        db.session.commit()
-        return redirect(url_for('home'))
-    return render_template('edit.html', movie = movie, form = form)
+        if form.validate_on_submit():
+            movie.rating = form.rating.data
+            movie.review = form.review.data
+            # movie.ranking = form.rank.data
+            db.session.commit()
+            return redirect(url_for('home'))
+        return render_template('edit.html', movie = movie, form = form)
 
 @app.route('/delete')
 def delete():
