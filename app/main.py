@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
-from mdb import SearchMovie, MovieDetails
+from .mdb import SearchMovie, MovieDetails
 import os
 
 app = Flask(__name__) 
