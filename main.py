@@ -111,5 +111,5 @@ def data():
 
         return redirect(url_for('edit', movieID = newMovie.id))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#if __name__ == '__main__':
+    #app.run(debug=True)
